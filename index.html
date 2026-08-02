@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A OFFICIALS — A Private Diagnosis of Public Information</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,600;0,800;1,700;1,800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-grad: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+      --accent-grad: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+      --glass-bg: rgba(255, 255, 255, 0.07);
+      --glass-border: rgba(255, 255, 255, 0.15);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background-color: #0b0f19;
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Animated Dynamic Background */
+    .bg-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      background: 
+        radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.35) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.35) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.25) 0%, transparent 60%);
+      filter: blur(60px);
+      animation: pulseBg 12s ease-in-out infinite alternate;
+    }
+
+    /* Animated background image overlay with slow zoom/pan */
+    .bg-image-overlay {
+      position: fixed;
+      top: -5%;
+      left: -5%;
+      width: 110%;
+      height: 110%;
+      z-index: -1;
+      background-image: linear-gradient(rgba(11, 15, 25, 0.75), rgba(11, 15, 25, 0.85)), 
+                        url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1920&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.55;
+      animation: floatImg 20s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulseBg {
+      0% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.1) rotate(3deg); }
+      100% { transform: scale(1) rotate(0deg); }
+    }
+
+    @keyframes floatImg {
+      0% { transform: scale(1) translate(0, 0); }
+      100% { transform: scale(1.08) translate(-15px, -15px); }
+    }
+
+    /* Floating Orbs */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(40px);
+      z-index: -1;
+      opacity: 0.6;
+      animation: floatOrb 8s infinite ease-in-out alternate;
+    }
+    .orb-1 {
+      width: 300px;
+      height: 300px;
+      background: #8b5cf6;
+      top: 10%;
+      left: 15%;
+    }
+    .orb-2 {
+      width: 250px;
+      height: 250px;
+      background: #06b6d4;
+      bottom: 15%;
+      right: 15%;
+      animation-delay: -4s;
+    }
+
+    @keyframes floatOrb {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(30px); }
+    }
+
+    /* Header & Navigation */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.8rem 8%;
+      backdrop-filter: blur(12px);
+      background: rgba(11, 15, 25, 0.4);
+      border-bottom: 1px solid var(--glass-border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .logo-svg {
+      width: 42px;
+      height: 42px;
+      filter: drop-shadow(0 2px 8px rgba(255, 255, 255, 0.3));
+    }
+
+    .logo-text {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: #ffffff;
+      font-style: italic;
+    }
+
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      margin-left: 2rem;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #ffffff;
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 5rem 2rem;
+      border-radius: 28px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--primary-grad);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 50px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      color: #e2e8f0;
+      backdrop-filter: blur(5px);
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+      max-width: 900px;
+    }
+
+    .gradient-text {
+      background: var(--primary-grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      max-width: 650px;
+      line-height: 1.6;
+      margin-bottom: 2.5rem;
+    }
+
+    /* Call To Action Buttons */
+    .cta-group {
+      display: flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 14px 32px;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--primary-grad);
+      color: #fff;
+      border: none;
+      box-shadow: 0 10px 25px rgba(168, 85, 247, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 30px rgba(168, 85, 247, 0.5);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-3px);
+    }
+
+    /* Features Section */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+
+    .card {
+      padding: 2.5rem;
+      border-radius: 20px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .card-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 3rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--glass-border);
+      margin-top: 5rem;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.2rem; }
+      .hero p { font-size: 1rem; }
+      header { padding: 1.2rem 5%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Dynamic Backgrounds -->
+  <div class="bg-animation"></div>
+  <div class="bg-image-overlay"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <!-- Header Navigation -->
+  <header>
+    <a href="#" class="logo-container">
+      <!-- Reconstructed SVG Vector Logo based on provided image -->
+      <svg class="logo-svg" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M250 80 L350 310 L290 310 L250 210 L210 310 L150 310 Z" fill="#FFFFFF"/>
+        <path d="M215 225 L285 225 L250 140 Z" fill="#0b0f19"/>
+      </svg>
+      <span class="logo-text">OFFICIALS</span>
+    </a>
+    <nav>
+      <a href="#about">Overview</a>
+      <a href="#services">Diagnosis</a>
+      <a href="#contact">Access</a>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <div class="container">
+    <section class="hero">
+      <span class="badge">A Officials Intelligence</span>
+      <h1>A Private Diagnosis of <br><span class="gradient-text">Public Information</span></h1>
+      <p>Transforming complex open data into actionable, high-precision private insights. Secure, analytical, and tailored intelligence for decision-makers.</p>
+      
+      <div class="cta-group">
+        <a href="#" class="btn btn-primary">Request Private Access</a>
+        <a href="#" class="btn btn-secondary">Explore Insights</a>
+      </div>
+    </section>
+
+    <div class="features-grid">
+      <div class="card">
+        <div class="card-icon">🔍</div>
+        <h3>Deep Analysis</h3>
+        <p>Comprehensive evaluation of public data streams extracted, processed, and refined into strategic reports.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔒</div>
+        <h3>Private Diagnosis</h3>
+        <p>Confidential evaluation tailored strictly to your operational parameters and organizational needs.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">⚡</div>
+        <h3>Real-Time Signals</h3>
+        <p>Continuous monitoring of official public updates with automated algorithmic anomaly detection.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 A OFFICIALS. All rights reserved. Built with public domain assets.</p>
+  </footer>
+
+</body>
+</html>
